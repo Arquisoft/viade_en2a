@@ -8,6 +8,8 @@ This repository contains a skeleton of the VIADE project.
 
 Raúl Pérez Molinero
 
+New feature change
+
 This project is an assignment for the [Software Architecture course](https://arquisoft.github.io/) following [these requirements](https://labra.solid.community/public/SoftwareArchitecture/AssignmentDescription/).
 
 The app is deployed at [https://arquisoft.github.io/viade_en2a/](https://arquisoft.github.io/viade_en2a/) which also contains a [technical documentation](https://arquisoft.github.io/viade_en2a/docs).

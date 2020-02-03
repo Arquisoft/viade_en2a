@@ -8,7 +8,7 @@ This repository contains a skeleton of the VIADE project.
 
 María Flórez Miranda
 
-This is in the new feature branch
+This is in the master
 
 This project is an assignment for the [Software Architecture course](https://arquisoft.github.io/) following [these requirements](https://labra.solid.community/public/SoftwareArchitecture/AssignmentDescription/).
 

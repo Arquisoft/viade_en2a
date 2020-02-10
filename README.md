@@ -6,7 +6,7 @@
 
 This repository contains a skeleton of the VIADE project.
 
-María Flórez Miranda
+María Flórez Miranda - feature branch 1
 
 This is in the master
 

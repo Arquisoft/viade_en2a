@@ -10,7 +10,6 @@ before_install:
 script:
   - CI=false npm run build
   - npm run docs
-  - CI=false npm run deploy
 deploy:
   provider: pages
   skip_cleanup: true

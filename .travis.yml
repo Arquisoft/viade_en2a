@@ -8,7 +8,7 @@ before_install:
   - sudo apt-get -y install graphviz
   - npm install
 script:
-  - npm run build
+  - CI=false npm run build
   - npm run docs
   - npm run deploy
 deploy:

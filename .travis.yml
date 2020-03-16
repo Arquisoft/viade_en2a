@@ -8,8 +8,9 @@ before_install:
   - sudo apt-get -y install graphviz
   - npm install
 script:
-  - CI=false npm run build
+  - npm run build
   - npm run docs
+  - npm run deploy
 deploy:
   provider: pages
   skip_cleanup: true

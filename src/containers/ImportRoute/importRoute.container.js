@@ -19,7 +19,7 @@ export class ImportRoute extends Component<Props>{
     }
 
     setRoute = routeImported => {
-        this.setState({importedRoute: true, route: routeImported});
+        this.setState({importedRoute: routeImported === null ? false : true, route: routeImported});
     }
 
     viewRoute = routeArray => {
@@ -28,7 +28,7 @@ export class ImportRoute extends Component<Props>{
                             <Container fluid>
                 <Row>
                     <Col xs={6} md={4}>
-                        <LateralMenu />
+                        <LateralMenu setRoute={this.setRoute}/>
                     </Col>
 
                     <Col xs={12} md={8}>

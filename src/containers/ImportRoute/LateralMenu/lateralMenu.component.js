@@ -14,47 +14,36 @@ const LateralMenu = (props) => {
   const { t } = useTranslation();
   const [file, updateFile] = useState(null);
   const [acceptedFiles, updateAcceptFiles] = useState(null);
+  const [routeArray, updateRouteArray] = useState(null);
 
   const submitButtonHandle = (event) => {
-    acceptedFiles.forEach((file) => {
-      const reader = new FileReader();
-
-      reader.onabort = () => errorToaster(t("error.fileReadError"), "Error");
-      reader.onerror = () => errorToaster(t("error.fileReadError"), "Error");
-      reader.onload = () => {
-        const routeString = reader.result;
-        try {
-          var importResult = true;
-          parseGpxToRoutes(routeString, function(routeArray) {
-            routeArray.forEach((route) => {
-              saveRouteToPOD(route, function(result) {
-                importResult = importResult && result;
-              });
-            });
-            if (importResult && routeArray.length > 0) {
-              successToaster(t("import.success"), t("import.successTitle"));
-              updateAcceptFiles(null);
-              updateFile(null);
-            } else {
-              errorToaster(t("import.failure"), t("import.failureTitle"));
-            }
-            if (routeArray.length > 0) {
-              props.setRoute(routeArray);
-            } else {
-              errorToaster(
-                t("error.gpxNotRoutes"),
-                t("error.gpxNotRoutesTitle")
-              );
-            }
-          });
-        } catch (error) {
-          errorToaster(t("error.importError"), "Error");
-        }
-      };
-      reader.readAsText(file);
-
-      event.preventDefault();
-    });
+    try {
+      var importResult = true;
+      routeArray.forEach((route) => {
+        saveRouteToPOD(route, function(result) {
+          importResult = importResult && result;
+        });
+      });
+      if (importResult && routeArray.length > 0) {
+        successToaster(t("import.success"), t("import.successTitle"));
+        updateAcceptFiles(null);
+        updateFile(null);
+        updateRouteArray(null);
+      } else {
+        errorToaster(t("import.failure"), t("import.failureTitle"));
+      }
+      if (routeArray.length > 0 || routeArray === null) {
+        props.setRoute(null);
+      } else {
+        errorToaster(
+          t("error.gpxNotRoutes"),
+          t("error.gpxNotRoutesTitle")
+        );
+      }
+    } catch (error) {
+      errorToaster(t("error.importError"), "Error");
+    }
+    event.preventDefault();
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -77,6 +66,7 @@ const LateralMenu = (props) => {
             parseGpxToRoutes(routeString, function(routeArray) {
               if (routeArray.length > 0) {
                 props.setRoute(routeArray);
+                updateRouteArray(routeArray);
               } else {
                 errorToaster(
                   t("error.gpxNotRoutes"),

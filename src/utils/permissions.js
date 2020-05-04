@@ -50,7 +50,8 @@ export const checkPermissions = async (webId, errorMessage) => {
  */
 export const checkOrSetInboxAppendPermissions = async (inboxPath, webId) => {
   // Fetch app permissions for the inbox and see if Append is there
-  const inboxAcls = new AccessControlList(webId, inboxPath);
+  const urlacl = `${inboxPath}.acl`;
+  const inboxAcls = new AccessControlList(webId, inboxPath, urlacl);
   const permissions = await inboxAcls.getPermissions();
   const inboxPublicPermissions = permissions.filter(
     (perm) => perm.agents === null
@@ -70,7 +71,8 @@ export const checkOrSetInboxAppendPermissions = async (inboxPath, webId) => {
           modes: [AccessControlList.MODES.APPEND],
         },
       ];
-      const ACLFile = new AccessControlList(webId, inboxPath);
+      const urlacl = `${inboxPath}.acl`;
+      const ACLFile = new AccessControlList(webId, inboxPath, urlacl);
       await ACLFile.createACL(permissions);
     } catch (error) {
       // TODO: Better error handling here
@@ -83,7 +85,8 @@ export const checkOrSetInboxAppendPermissions = async (inboxPath, webId) => {
 
 export const checkOrSetSettingsReadPermissions = async (inboxPath, webId) => {
   // Fetch app permissions for the inbox and see if Append is there
-  const inboxAcls = new AccessControlList(webId, inboxPath);
+  const urlacl = `${inboxPath}.acl`;
+  const inboxAcls = new AccessControlList(webId, inboxPath, urlacl);
   const permissions = await inboxAcls.getPermissions();
   const inboxPublicPermissions = permissions.filter(
     (perm) => perm.agents === null
@@ -103,7 +106,8 @@ export const checkOrSetSettingsReadPermissions = async (inboxPath, webId) => {
           modes: [AccessControlList.MODES.READ],
         },
       ];
-      const ACLFile = new AccessControlList(webId, inboxPath);
+      const urlacl = `${inboxPath}.acl`;
+      const ACLFile = new AccessControlList(webId, inboxPath, urlacl);
       await ACLFile.createACL(permissions);
     } catch (error) {
       // TODO: Better error handling here
@@ -122,7 +126,9 @@ export const checkOrSetSettingsReadPermissions = async (inboxPath, webId) => {
  */
 export const setReadPermissions = async (path, webId, agent) => {
   // Fetch app permissions for the inbox and see if Append is there
-  const acls = new AccessControlList(webId, path);
+  
+  const urlacl = `${path}.acl`;
+  const acls = new AccessControlList(webId, path, urlacl);
   const permissions = await acls.getPermissions();
   const publicPermissions = permissions.filter((perm) => perm.agents === agent);
 
@@ -132,7 +138,7 @@ export const setReadPermissions = async (path, webId, agent) => {
   const allPermissions = permissions.filter((perm) =>
     perm.modes.includes(AccessControlList.MODES.READ)
   );
-  const ACLFile = new AccessControlList(webId, path);
+  const ACLFile = new AccessControlList(webId, path, urlacl);
   if (readPermission.length <= 0) {
     // What do we do when the permission is missing? Add it!
     for (let i = 0; i < allPermissions.length; i++) {
@@ -171,7 +177,9 @@ export const setReadPermissions = async (path, webId, agent) => {
 
 export const setReadWritePermissions = async (path, webId, agent) => {
   // Fetch app permissions for the inbox and see if Append is there
-  const acls = new AccessControlList(webId, path);
+  
+  const urlacl = `${path}.acl`;
+  const acls = new AccessControlList(webId, path, urlacl);
   const permissions = await acls.getPermissions();
   const publicPermissions = permissions.filter((perm) => perm.agents === agent);
 
@@ -181,7 +189,7 @@ export const setReadWritePermissions = async (path, webId, agent) => {
   const allPermissions = permissions.filter((perm) =>
     perm.modes.includes(AccessControlList.MODES.READ)
   );
-  const ACLFile = new AccessControlList(webId, path);
+  const ACLFile = new AccessControlList(webId, path, urlacl);
   if (readPermission.length <= 0) {
     // What do we do when the permission is missing? Add it!
     for (let i = 0; i < allPermissions.length; i++) {
